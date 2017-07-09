@@ -44,7 +44,7 @@ def save():
 
 def index(request):
     save()
-    return HttpResponse("something")
+    return HttpResponse("Added to db succesfully")
 
 def website(request):
     print(request.method)
@@ -60,17 +60,18 @@ def website(request):
         except:
             start_page = 0
         products = Products.objects.filter(category=category)[start_page:start_page + 24]
-        context = {'products'  : products, "category" : category}
+        context = {'products'  : products, "category" : category, "categories" : categories}
         return render_to_response("crawler/website.html", context)
     if request.GET.get('start_page'):
         start_page = int(request.GET.get('start_page')) -1
         print "Catergory is ", category
         products = Products.objects.filter(category=category)[start_page:start_page + 24]
-        context = {'products'  : products, "category" : category}
+        context = {"products" : products, "category" : category, "categories" : categories}
         return render_to_response("crawler/website.html", context)
 
     print start_page
     products = Products.objects.filter(category=category if category else "Computer")[start_page*24: start_page + 24]
     return render_to_response("crawler/website.html", {"products" : products, 
-                                                       "category" : category})
+                                                       "category" : category,
+                                                       "categories" : categories})
 

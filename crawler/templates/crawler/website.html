@@ -1,12 +1,14 @@
 <html>
 <form method="GET">{% csrf_token %}
- <select name="category" id="category" value = "{{ category }}" >
-        <option value="Computer">Computer</option>
-        <option value="Cameras">Cameras</option>
-        <option value= "Kitchen">Kitchen</option>
-        <option value="Clothing">Clothing</option>
-        <option value="Footwear">Footwear</option>
-</select>
+
+<select name="category" id="category" value = "{{ category }}" >
+{% for cat in categories %}
+   <option value="{{cat}}"
+       {% if cat == category %}selected="selected"{% endif %}>
+        {{cat}}
+   </option>
+{% endfor %}
+
 1: <input type="submit" name="start_page" value=1, >
 
 2: <input type="submit" name="start_page" value=2>
@@ -28,4 +30,7 @@
 {% endfor %}
 
 </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
 </html>
