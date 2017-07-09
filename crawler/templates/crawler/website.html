@@ -1,13 +1,19 @@
 <html>
 <form method="GET">{% csrf_token %}
- <select name="category" id="category" value = "{{ category }}" onchange="this.form.submit()">
+ <select name="category" id="category" value = "{{ category }}" >
         <option value="Computer">Computer</option>
         <option value="Cameras">Cameras</option>
         <option value= "Kitchen">Kitchen</option>
         <option value="Clothing">Clothing</option>
         <option value="Footwear">Footwear</option>
-        <option value="Watches">Watches</option>  
 </select>
+1: <input type="submit" name="start_page" value=1, >
+
+2: <input type="submit" name="start_page" value=2>
+
+3: <input type="submit" name="start_page" value=3>
+
+4: <input type="submit" name="start_page" value=4>
 </form>
 <table>
 {% for item in products %}
@@ -20,8 +26,6 @@
     {{ value|linebreaks }}
     </tr>
 {% endfor %}
-<form method = "GET">
-NEXT: <input type="submit" name="next" value="next">
-</form> 
+
 </table>
 </html>

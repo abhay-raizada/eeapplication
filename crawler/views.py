@@ -48,27 +48,29 @@ def index(request):
 
 def website(request):
     print(request.method)
-    categories = ["Computer", "Cameras", "Kitchen", "Clothing", "Footwear", 
-                  "Watches"]
-    start_page = 0
-    end_page = 24
-    #computers = Products.objects.filter(category="Computer")[:24]
+    categories = ["Computer", "Cameras", "Kitchen", "Clothing", "Footwear"]
+
     #context = {'computers'  : computers
-    category = "Computer"
+    category = None
+    start_page = 0
     if request.GET.get('category'):
         category = request.GET.get('category')
-        products = Products.objects.filter(category=category)[start_page:end_page]
+        try:
+            start_page = int(request.GET.get('start_page')) -1
+        except:
+            start_page = 0
+        products = Products.objects.filter(category=category)[start_page:start_page + 24]
         context = {'products'  : products, "category" : category}
         return render_to_response("crawler/website.html", context)
-    if request.GET.get('next'):
-        start_page += 24
-        end_page += 24
-        print(start_page, end_page)
-        products = Products.objects.filter(category=category)[start_page:end_page]
+    if request.GET.get('start_page'):
+        start_page = int(request.GET.get('start_page')) -1
+        print "Catergory is ", category
+        products = Products.objects.filter(category=category)[start_page:start_page + 24]
         context = {'products'  : products, "category" : category}
         return render_to_response("crawler/website.html", context)
 
-    products = Products.objects.filter(category=category)[start_page:end_page]
+    print start_page
+    products = Products.objects.filter(category=category if category else "Computer")[start_page*24: start_page + 24]
     return render_to_response("crawler/website.html", {"products" : products, 
                                                        "category" : category})
 
